@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowgard Water Solutions Limited | Limitless Flow</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS VARIABLES & COOL COLOR BLEND --- */
+        :root {
+            --bg-deep: #0B132B;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #0c4a6e 70%, #0369a1 100%);
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-card: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-hover: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            
+            --cyan-accent: #06b6d4;
+            --teal-accent: #14b8a6;
+            --blue-light: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        /* --- BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-deep);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow Background Spheres */
+        .ambient-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .glow-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: rgba(6, 182, 212, 0.25); }
+        .glow-2 { bottom: 10%; right: -5%; width: 600px; height: 600px; background: rgba(30, 27, 75, 0.5); }
+        .glow-3 { top: 40%; left: 30%; width: 450px; height: 450px; background: rgba(20, 184, 166, 0.15); }
+
+        /* --- GLASSMORPHISM CONTAINER UTILITY --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            z-index: 1000;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--cyan-accent), var(--teal-accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--cyan-accent);
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cyan-accent), var(--teal-accent));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(6, 182, 212, 0.5);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* --- LAYOUT SECTIONS --- */
+        section {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--blue-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding-top: 180px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.15;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            background: linear-gradient(135deg, var(--cyan-accent), var(--blue-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-card {
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+
+        .hero-card img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 16px;
+            opacity: 0.8;
+        }
+
+        /* --- ABOUT & VALUES --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .about-card {
+            padding: 40px;
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--cyan-accent);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .value-item {
+            padding: 20px;
+            background: var(--glass-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+        }
+
+        .value-item h4 {
+            color: var(--blue-light);
+            margin-bottom: 5px;
+        }
+
+        /* --- SERVICES SECTION --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            padding: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            background: var(--glass-hover);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+
+        .service-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        /* --- PROCESS SECTION --- */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            position: relative;
+        }
+
+        .step-card {
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--glass-card);
+            border: 1px solid var(--cyan-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            color: var(--cyan-accent);
+        }
+
+        .step-number {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* --- PRODUCT TEASER --- */
+        .teaser-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .product-icon {
+            font-size: 2.5rem;
+            color: var(--blue-light);
+            margin-bottom: 15px;
+        }
+
+        /* --- QUOTATION / CONTACT SECTION --- */
+        .quote-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .contact-info {
+            padding: 40px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--glass-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan-accent);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* FORM STYLES */
+        .quote-form {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--cyan-accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        select.form-control option {
+            background: var(--bg-deep);
+            color: var(--text-main);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            height: 100px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: 60px;
+            padding: 40px 5%;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background: rgba(11, 19, 43, 0.6);
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            .hero, .quote-section, .about-grid {
+                grid-template-columns: 1fr;
+            }
+            nav {
+                display: none; /* Can be expanded with a mobile menu toggle */
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Glow Effects -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <!-- GLASS NAVIGATION -->
+    <header class="glass-panel">
+        <a href="#" class="logo">
+            <div class="logo-icon"><i class="fa-solid => fa-droplet"></i></div>
+            <span>FLOWGARD</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#products">Products</a></li>
+            </ul>
+        </nav>
+        <a href="#quote" class="btn btn-primary"><i class="fa-solid fa-file-invoice"></i> Get Quotation</a>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Limitless Flow <span>Reliable Water Solutions</span> Across Kenya</h1>
+            <p>From deep borehole drilling and earth dams to modern drip irrigation, site drainage, and complete plumbing installations—we engineer water security for homes, farms, and institutions[cite: 1].</p>
+            <div class="hero-btns">
+                <a href="#quote" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Get a Free Quote</a>
+                <a href="tel:0732598300" class="btn btn-glass"><i class="fa-solid fa-phone"></i> Call 0732 598 300</a>
+            </div>
+        </div>
+        <div class="hero-card glass-panel">
+            <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=800&q=80" alt="Borehole Drilling Rig">
+        </div>
+    </section>
+
+    <!-- ABOUT US -->
+    <section id="about">
+        <div class="section-header">
+            <h2>About Flowgard</h2>
+            <p>Your single-source water & civil engineering contractor[cite: 1].</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card glass-panel">
+                <h3>Who We Are</h3>
+                <p>Fully registered as <strong>Flow Gard Water Solutions Limited</strong> (Reg No. PVF6Y1ROLRZ)[cite: 1]. Operating out of Ruaraka, Nairobi, we deliver reliable, affordable, and professionally executed water and civil engineering solutions across Kenya[cite: 1].</p>
+            </div>
+            <div class="about-card glass-panel">
+                <h3>Our Mission</h3>
+                <p>To improve water access for residential homes, agricultural farms, and institutions by providing top-tier boreholes, dams, irrigation setups, and plumbing services backed by dependable workmanship[cite: 1].</p>
+            </div>
+        </div>
+
+        <!-- VALUES -->
+        <div class="glass-panel" style="padding: 30px;">
+            <h3 style="text-align: center; margin-bottom: 20px; color: var(--cyan-accent);">Core Values</h3>
+            <div class="values-grid">
+                <div class="value-item">
+                    <h4><i class="fa-solid fa-shield-halved"></i> Integrity</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Honest pricing & transparent project execution[cite: 1].</p>
+                </div>
+                <div class="value-item">
+                    <h4><i class="fa-solid fa-award"></i> Quality</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Durable, standards-compliant structural installations[cite: 1].</p>
+                </div>
+                <div class="value-item">
+                    <h4><i class="fa-solid fa-clock"></i> Reliability</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Showing up and consistently delivering on schedule[cite: 1].</p>
+                </div>
+                <div class="value-item">
+                    <h4><i class="fa-solid fa-headset"></i> Customer Care</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Listening first to deliver fully customized solutions[cite: 1].</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services">
+        <div class="section-header">
+            <h2>Core Services</h2>
+            <p>End-to-end water management and engineering solutions[cite: 1].</p>
+        </div>
+
+        <div class="services-grid">
+            <!-- Service 1 -->
+            <div class="service-card glass-panel">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=500&q=80" alt="Boreholes" class="service-img">
+                    <h3>Boreholes</h3>
+                    <p>Comprehensive underground water exploration, precision drilling, casing, and professional test pumping for high-yield wells[cite: 1].</p>
+                </div>
+                <a href="#quote" class="btn btn-glass" style="width: 100%; justify-content: center;">Request Details</a>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-card glass-panel">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=500&q=80" alt="Dams" class="service-img">
+                    <h3>Dams & Water Pans</h3>
+                    <p>Large-scale excavation and earth dam construction to collect and store massive volumes of surface runoff water[cite: 1].</p>
+                </div>
+                <a href="#quote" class="btn btn-glass" style="width: 100%; justify-content: center;">Request Details</a>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-card glass-panel">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?auto=format&fit=crop&w=500&q=80" alt="Irrigation" class="service-img">
+                    <h3>Irrigation Systems</h3>
+                    <p>Tailored agricultural drip systems, overhead sprinklers, and automated commercial farm layouts for maximum yield[cite: 1].</p>
+                </div>
+                <a href="#quote" class="btn btn-glass" style="width: 100%; justify-content: center;">Request Details</a>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="service-card glass-panel">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=500&q=80" alt="Drainage" class="service-img">
+                    <h3>Drainage Systems</h3>
+                    <p>Advanced civil site drainage solutions, French drains, storm management, and culvert installations[cite: 1].</p>
+                </div>
+                <a href="#quote" class="btn btn-glass" style="width: 100%; justify-content: center;">Request Details</a>
+            </div>
+
+            <!-- Service 5 -->
+            <div class="service-card glass-panel">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=500&q=80" alt="Plumbing" class="service-img">
+                    <h3>Plumbing Systems</h3>
+                    <p>Complete domestic and commercial pipework installation, routine maintenance, structural repairs, and sewer line connections[cite: 1].</p>
+                </div>
+                <a href="#quote" class="btn btn-glass" style="width: 100%; justify-content: center;">Request Details</a>
+            </div>
+
+            <!-- Service 6 -->
+            <div class="service-card glass-panel">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80" alt="Water Materials" class="service-img">
+                    <h3>Water Materials & Hardware</h3>
+                    <p>Direct supply of high-grade pipes, fittings, submersible pumps, and borehole/irrigation hardware[cite: 1].</p>
+                </div>
+                <a href="#quote" class="btn btn-glass" style="width: 100%; justify-content: center;">Request Details</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section id="process">
+        <div class="section-header">
+            <h2>How We Work</h2>
+            <p>A streamlined, 4-step approach ensuring successful project delivery[cite: 1].</p>
+        </div>
+
+        <div class="process-steps">
+            <div class="step-card glass-panel">
+                <span class="step-number">01</span>
+                <div class="step-icon"><i class="fa-solid fa-comments"></i></div>
+                <h4>Consultation</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Understanding your water needs and project requirements[cite: 1].</p>
+            </div>
+            <div class="step-card glass-panel">
+                <span class="step-number">02</span>
+                <div class="step-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+                <h4>Site Survey</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Technical assessment and hydrological surveying on location[cite: 1].</p>
+            </div>
+            <div class="step-card glass-panel">
+                <span class="step-number">03</span>
+                <div class="step-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                <h4>Execution</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Professional drilling, construction, or installation work[cite: 1].</p>
+            </div>
+            <div class="step-card glass-panel">
+                <span class="step-number">04</span>
+                <div class="step-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h4>Handover</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Final testing, client sign-off, and ongoing support[cite: 1].</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT LINE TEASER -->
+    <section id="products">
+        <div class="section-header">
+            <h2>Products & Dispensers</h2>
+            <p>Clean water delivery and dispenser equipment for commercial and home settings[cite: 1].</p>
+        </div>
+
+        <div class="teaser-grid">
+            <div class="product-card glass-panel">
+                <div class="product-icon"><i class="fa-solid fa-bottle-water"></i></div>
+                <h3>Bottled Water Supply</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin: 10px 0 20px;">Pure, mineral-balanced bottled water available in multiple capacities for office or home delivery[cite: 1].</p>
+                <a href="#quote" class="btn btn-glass" style="font-size: 0.85rem;">Inquire Pricing</a>
+            </div>
+
+            <div class="product-card glass-panel">
+                <div class="product-icon"><i class="fa-solid fa-faucet-drip"></i></div>
+                <h3>Water Dispensers</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin: 10px 0 20px;">Modern hot & cold water dispensers for purchase or lease. Complete with installation[cite: 1].</p>
+                <a href="#quote" class="btn btn-glass" style="font-size: 0.85rem;">Inquire Pricing</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GET QUOTATION & CONTACT SECTION -->
+    <section id="quote">
+        <div class="section-header">
+            <h2>Get A Quotation</h2>
+            <p>Contact our technical team today to discuss your project scope and receive a transparent quote[cite: 1].</p>
+        </div>
+
+        <div class="quote-section">
+            <!-- Contact Details Panel -->
+            <div class="contact-info glass-panel">
+                <h3 style="margin-bottom: 25px; color: var(--cyan-accent);">Contact Details</h3>
+                
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <strong style="display: block;">Office Address</strong>
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">Trio Complex, Ruaraka, Nairobi, Kenya[cite: 1]</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div>
+                        <strong style="display: block;">Postal Address</strong>
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">P.O. Box 10208, Nairobi[cite: 1]</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <strong style="display: block;">Direct Calls</strong>
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">0732 598 300[cite: 1]</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div>
+                        <strong style="display: block;">WhatsApp</strong>
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">0795 629 781[cite: 1]</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-at"></i></div>
+                    <div>
+                        <strong style="display: block;">Email</strong>
+                        <span style="color: var(--text-muted); font-size: 0.9rem;">flowgaurdlimited@gmail.com[cite: 1]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quotation Form Panel -->
+            <div class="quote-form glass-panel">
+                <form onsubmit="event.preventDefault(); alert('Quotation request sent successfully!');">
+                    <div class="form-group">
+                        <label for="name">Full Name / Organization</label>
+                        <input type="text" id="name" class="form-control" placeholder="e.g., Jane Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="07XX XXX XXX" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service">Required Service</label>
+                        <select id="service" class="form-control" required>
+                            <option value="" disabled selected>Select a service...</option>
+                            <option value="borehole">Borehole Drilling & Test Pumping</option>
+                            <option value="dams">Earth Dam / Water Pan Construction</option>
+                            <option value="irrigation">Irrigation System Setup</option>
+                            <option value="drainage">Drainage & Culverts</option>
+                            <option value="plumbing">Plumbing & Sewerage Work</option>
+                            <option value="materials">Water Materials Supply</option>
+                            <option value="products">Bottled Water & Dispensers</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Project Location (County/Town)</label>
+                        <input type="text" id="location" class="form-control" placeholder="e.g., Nairobi, Kiambu, Machakos" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Project Details / Message</label>
+                        <textarea id="message" class="form-control" placeholder="Briefly describe what you need..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Quotation Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Flow Gard Water Solutions Limited (PVF6Y1ROLRZ)[cite: 1]. All Rights Reserved.</p>
+        <p style="margin-top: 5px; opacity: 0.6;">Trio Complex, Ruaraka, Nairobi | P.O. Box 10208, Nairobi[cite: 1]</p>
+    </footer>
+
+</body>
+</html>
