@@ -79,6 +79,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            overflow: hidden;
+            background-image:
+                linear-gradient(120deg, rgba(11, 19, 43, 0.82), rgba(3, 105, 161, 0.55)),
+                url('https://images.unsplash.com/photo-1687669978475-11760bdda194?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center 65%;
+        }
+
+        header.glass-panel {
+            backdrop-filter: blur(22px) saturate(140%);
+            -webkit-backdrop-filter: blur(22px) saturate(140%);
+            background-color: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow:
+                0 8px 32px 0 rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+        }
+
+        #header-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            border-radius: 20px;
         }
 
         .logo {
@@ -120,6 +146,72 @@
 
         nav a:hover {
             color: var(--cyan-accent);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        /* --- WHATSAPP FLOATING BUTTON --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 58px;
+            height: 58px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1100;
+            color: #fff;
+            font-size: 1.7rem;
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            animation: wa-pulse 2.4s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 26px rgba(37, 211, 102, 0.7);
+        }
+
+        @keyframes wa-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55); }
+            70% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .whatsapp-float { animation: none; }
+        }
+
+        /* --- SCROLL REVEAL EFFECT --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
         }
 
         /* --- BUTTONS --- */
@@ -190,10 +282,49 @@
         /* --- HERO SECTION --- */
         .hero {
             padding-top: 180px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
+            padding-bottom: 90px;
+            padding-left: 0;
+            padding-right: 0;
+            display: block;
+            position: relative;
+            width: 100vw;
+            max-width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            border-radius: 0 0 40px 40px;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1687669978475-11760bdda194?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(11, 19, 43, 0.88) 0%, rgba(15, 23, 42, 0.75) 45%, rgba(3, 105, 161, 0.55) 100%);
+            z-index: -1;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 640px;
+            padding: 45px;
         }
 
         .hero-content h1 {
@@ -221,19 +352,71 @@
             flex-wrap: wrap;
         }
 
-        .hero-card {
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 24px;
+        /* --- HERO STATS STRIP --- */
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 45px;
+            max-width: 640px;
         }
 
-        .hero-card img {
-            width: 100%;
-            height: 380px;
-            object-fit: cover;
-            border-radius: 16px;
-            opacity: 0.8;
+        .stat-item {
+            flex: 1;
+            min-width: 140px;
+            padding: 18px 16px;
+            text-align: center;
+        }
+
+        .stat-item .stat-number {
+            display: block;
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan-accent), var(--blue-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .stat-item .stat-label {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        /* --- SCROLL CUE --- */
+        .scroll-cue {
+            position: absolute;
+            bottom: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            z-index: 1;
+            animation: scroll-bounce 2.2s ease-in-out infinite;
+        }
+
+        .scroll-cue i {
+            font-size: 1.2rem;
+            color: var(--cyan-accent);
+        }
+
+        @keyframes scroll-bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 8px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .scroll-cue { animation: none; }
         }
 
         /* --- ABOUT & VALUES --- */
@@ -456,15 +639,107 @@
 
         /* --- RESPONSIVE MEDIA QUERIES --- */
         @media (max-width: 900px) {
-            .hero, .quote-section, .about-grid {
+            .quote-section, .about-grid {
                 grid-template-columns: 1fr;
             }
-            nav {
-                display: none; /* Can be expanded with a mobile menu toggle */
+
+            .hero-content {
+                padding: 32px;
             }
+
             .hero-content h1 {
                 font-size: 2.5rem;
             }
+
+            .nav-toggle {
+                display: inline-flex;
+            }
+
+            nav {
+                position: absolute;
+                top: calc(100% + 12px);
+                left: 0;
+                right: 0;
+                display: none;
+                background: rgba(11, 19, 43, 0.95);
+                backdrop-filter: blur(16px);
+                border: 1px solid var(--glass-border);
+                border-radius: 16px;
+                padding: 10px;
+            }
+
+            nav.open {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 12px 16px;
+                border-radius: 10px;
+            }
+
+            nav ul li a:hover {
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            header .btn-primary span,
+            header .btn-primary {
+                font-size: 0.85rem;
+                padding: 10px 16px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            header {
+                top: 12px;
+                width: 94%;
+                padding: 10px 16px;
+            }
+
+            header .btn-primary i { margin: 0; }
+            header .btn-primary { padding: 10px 14px; }
+
+            section {
+                padding: 70px 6% 60px;
+            }
+
+            .hero { padding-top: 130px; padding-bottom: 60px; }
+            .hero-inner { padding: 0 6%; }
+            .hero-content { padding: 24px; border-radius: 16px; }
+
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content p { font-size: 1rem; }
+
+            .hero-btns { flex-direction: column; align-items: stretch; }
+            .hero-btns .btn { justify-content: center; }
+
+            .hero-stats { margin-top: 30px; gap: 12px; }
+            .stat-item { min-width: 100px; padding: 14px 10px; }
+            .stat-item .stat-number { font-size: 1.5rem; }
+
+            .scroll-cue { display: none; }
+
+            .section-header h2 { font-size: 1.9rem; }
+
+            .about-card, .quote-form, .contact-info { padding: 25px; }
+
+            .whatsapp-float {
+                width: 52px;
+                height: 52px;
+                font-size: 1.5rem;
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero-content h1 { font-size: 1.7rem; }
+            .logo span { font-size: 1rem; }
         }
     </style>
 </head>
@@ -477,11 +752,12 @@
 
     <!-- GLASS NAVIGATION -->
     <header class="glass-panel">
+        <canvas id="header-particles"></canvas>
         <a href="#" class="logo">
-            <div class="logo-icon"><i class="fa-solid => fa-droplet"></i></div>
+            <div class="logo-icon"><i class="fa-solid fa-droplet"></i></div>
             <span>FLOWGARD</span>
         </a>
-        <nav>
+        <nav id="main-nav">
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
@@ -489,37 +765,61 @@
                 <li><a href="#products">Products</a></li>
             </ul>
         </nav>
-        <a href="#quote" class="btn btn-primary"><i class="fa-solid fa-file-invoice"></i> Get Quotation</a>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <a href="#quote" class="btn btn-primary"><i class="fa-solid fa-file-invoice"></i> <span>Get Quotation</span></a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
     </header>
 
     <!-- HERO SECTION -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>Limitless Flow <span>Reliable Water Solutions</span> Across Kenya</h1>
-            <p>From deep borehole drilling and earth dams to modern drip irrigation, site drainage, and complete plumbing installations—we engineer water security for homes, farms, and institutions[cite: 1].</p>
-            <div class="hero-btns">
-                <a href="#quote" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Get a Free Quote</a>
-                <a href="tel:0732598300" class="btn btn-glass"><i class="fa-solid fa-phone"></i> Call 0732 598 300</a>
+        <div class="hero-inner">
+            <div class="hero-content glass-panel reveal">
+                <h1>Limitless Flow <span>Reliable Water Solutions</span> Across Kenya</h1>
+                <p>From deep borehole drilling and earth dams to modern drip irrigation, site drainage, and complete plumbing installations—we engineer water security for homes, farms, and institutions[cite: 1].</p>
+                <div class="hero-btns">
+                    <a href="#quote" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Get a Free Quote</a>
+                    <a href="tel:0732598300" class="btn btn-glass"><i class="fa-solid fa-phone"></i> Call 0732 598 300</a>
+                </div>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item glass-panel reveal">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat-item glass-panel reveal">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Projects Delivered</span>
+                </div>
+                <div class="stat-item glass-panel reveal">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support Response</span>
+                </div>
             </div>
         </div>
-        <div class="hero-card glass-panel">
-            <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=800&q=80" alt="Borehole Drilling Rig">
-        </div>
+
+        <a href="#about" class="scroll-cue">
+            Scroll
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
     </section>
 
     <!-- ABOUT US -->
     <section id="about">
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2>About Flowgard</h2>
             <p>Your single-source water & civil engineering contractor[cite: 1].</p>
         </div>
 
         <div class="about-grid">
-            <div class="about-card glass-panel">
+            <div class="about-card glass-panel reveal">
                 <h3>Who We Are</h3>
                 <p>Fully registered as <strong>Flow Gard Water Solutions Limited</strong> (Reg No. PVF6Y1ROLRZ)[cite: 1]. Operating out of Ruaraka, Nairobi, we deliver reliable, affordable, and professionally executed water and civil engineering solutions across Kenya[cite: 1].</p>
             </div>
-            <div class="about-card glass-panel">
+            <div class="about-card glass-panel reveal">
                 <h3>Our Mission</h3>
                 <p>To improve water access for residential homes, agricultural farms, and institutions by providing top-tier boreholes, dams, irrigation setups, and plumbing services backed by dependable workmanship[cite: 1].</p>
             </div>
@@ -529,19 +829,19 @@
         <div class="glass-panel" style="padding: 30px;">
             <h3 style="text-align: center; margin-bottom: 20px; color: var(--cyan-accent);">Core Values</h3>
             <div class="values-grid">
-                <div class="value-item">
+                <div class="value-item reveal">
                     <h4><i class="fa-solid fa-shield-halved"></i> Integrity</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted);">Honest pricing & transparent project execution[cite: 1].</p>
                 </div>
-                <div class="value-item">
+                <div class="value-item reveal">
                     <h4><i class="fa-solid fa-award"></i> Quality</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted);">Durable, standards-compliant structural installations[cite: 1].</p>
                 </div>
-                <div class="value-item">
+                <div class="value-item reveal">
                     <h4><i class="fa-solid fa-clock"></i> Reliability</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted);">Showing up and consistently delivering on schedule[cite: 1].</p>
                 </div>
-                <div class="value-item">
+                <div class="value-item reveal">
                     <h4><i class="fa-solid fa-headset"></i> Customer Care</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted);">Listening first to deliver fully customized solutions[cite: 1].</p>
                 </div>
@@ -551,14 +851,14 @@
 
     <!-- SERVICES SECTION -->
     <section id="services">
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2>Core Services</h2>
             <p>End-to-end water management and engineering solutions[cite: 1].</p>
         </div>
 
         <div class="services-grid">
             <!-- Service 1 -->
-            <div class="service-card glass-panel">
+            <div class="service-card glass-panel reveal">
                 <div>
                     <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=500&q=80" alt="Boreholes" class="service-img">
                     <h3>Boreholes</h3>
@@ -568,7 +868,7 @@
             </div>
 
             <!-- Service 2 -->
-            <div class="service-card glass-panel">
+            <div class="service-card glass-panel reveal">
                 <div>
                     <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=500&q=80" alt="Dams" class="service-img">
                     <h3>Dams & Water Pans</h3>
@@ -578,7 +878,7 @@
             </div>
 
             <!-- Service 3 -->
-            <div class="service-card glass-panel">
+            <div class="service-card glass-panel reveal">
                 <div>
                     <img src="https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?auto=format&fit=crop&w=500&q=80" alt="Irrigation" class="service-img">
                     <h3>Irrigation Systems</h3>
@@ -588,7 +888,7 @@
             </div>
 
             <!-- Service 4 -->
-            <div class="service-card glass-panel">
+            <div class="service-card glass-panel reveal">
                 <div>
                     <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=500&q=80" alt="Drainage" class="service-img">
                     <h3>Drainage Systems</h3>
@@ -598,7 +898,7 @@
             </div>
 
             <!-- Service 5 -->
-            <div class="service-card glass-panel">
+            <div class="service-card glass-panel reveal">
                 <div>
                     <img src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=500&q=80" alt="Plumbing" class="service-img">
                     <h3>Plumbing Systems</h3>
@@ -608,7 +908,7 @@
             </div>
 
             <!-- Service 6 -->
-            <div class="service-card glass-panel">
+            <div class="service-card glass-panel reveal">
                 <div>
                     <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80" alt="Water Materials" class="service-img">
                     <h3>Water Materials & Hardware</h3>
@@ -621,31 +921,31 @@
 
     <!-- PROCESS SECTION -->
     <section id="process">
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2>How We Work</h2>
             <p>A streamlined, 4-step approach ensuring successful project delivery[cite: 1].</p>
         </div>
 
         <div class="process-steps">
-            <div class="step-card glass-panel">
+            <div class="step-card glass-panel reveal">
                 <span class="step-number">01</span>
                 <div class="step-icon"><i class="fa-solid fa-comments"></i></div>
                 <h4>Consultation</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Understanding your water needs and project requirements[cite: 1].</p>
             </div>
-            <div class="step-card glass-panel">
+            <div class="step-card glass-panel reveal">
                 <span class="step-number">02</span>
                 <div class="step-icon"><i class="fa-solid fa-map-location-dot"></i></div>
                 <h4>Site Survey</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Technical assessment and hydrological surveying on location[cite: 1].</p>
             </div>
-            <div class="step-card glass-panel">
+            <div class="step-card glass-panel reveal">
                 <span class="step-number">03</span>
                 <div class="step-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
                 <h4>Execution</h4>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Professional drilling, construction, or installation work[cite: 1].</p>
             </div>
-            <div class="step-card glass-panel">
+            <div class="step-card glass-panel reveal">
                 <span class="step-number">04</span>
                 <div class="step-icon"><i class="fa-solid fa-circle-check"></i></div>
                 <h4>Handover</h4>
@@ -656,20 +956,20 @@
 
     <!-- PRODUCT LINE TEASER -->
     <section id="products">
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2>Products & Dispensers</h2>
             <p>Clean water delivery and dispenser equipment for commercial and home settings[cite: 1].</p>
         </div>
 
         <div class="teaser-grid">
-            <div class="product-card glass-panel">
+            <div class="product-card glass-panel reveal">
                 <div class="product-icon"><i class="fa-solid fa-bottle-water"></i></div>
                 <h3>Bottled Water Supply</h3>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin: 10px 0 20px;">Pure, mineral-balanced bottled water available in multiple capacities for office or home delivery[cite: 1].</p>
                 <a href="#quote" class="btn btn-glass" style="font-size: 0.85rem;">Inquire Pricing</a>
             </div>
 
-            <div class="product-card glass-panel">
+            <div class="product-card glass-panel reveal">
                 <div class="product-icon"><i class="fa-solid fa-faucet-drip"></i></div>
                 <h3>Water Dispensers</h3>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin: 10px 0 20px;">Modern hot & cold water dispensers for purchase or lease. Complete with installation[cite: 1].</p>
@@ -680,14 +980,14 @@
 
     <!-- GET QUOTATION & CONTACT SECTION -->
     <section id="quote">
-        <div class="section-header">
+        <div class="section-header reveal">
             <h2>Get A Quotation</h2>
             <p>Contact our technical team today to discuss your project scope and receive a transparent quote[cite: 1].</p>
         </div>
 
         <div class="quote-section">
             <!-- Contact Details Panel -->
-            <div class="contact-info glass-panel">
+            <div class="contact-info glass-panel reveal">
                 <h3 style="margin-bottom: 25px; color: var(--cyan-accent);">Contact Details</h3>
                 
                 <div class="info-item">
@@ -732,8 +1032,8 @@
             </div>
 
             <!-- Quotation Form Panel -->
-            <div class="quote-form glass-panel">
-                <form onsubmit="event.preventDefault(); alert('Quotation request sent successfully!');">
+            <div class="quote-form glass-panel reveal">
+                <form id="quote-form" onsubmit="return submitToWhatsApp(event);">
                     <div class="form-group">
                         <label for="name">Full Name / Organization</label>
                         <input type="text" id="name" class="form-control" placeholder="e.g., Jane Doe" required>
@@ -781,6 +1081,150 @@
         <p>&copy; 2026 Flow Gard Water Solutions Limited (PVF6Y1ROLRZ)[cite: 1]. All Rights Reserved.</p>
         <p style="margin-top: 5px; opacity: 0.6;">Trio Complex, Ruaraka, Nairobi | P.O. Box 10208, Nairobi[cite: 1]</p>
     </footer>
+
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="https://wa.me/254795629781?text=Hello%20Flowgard%2C%20I%27d%20like%20to%20enquire%20about%20your%20water%20services."
+       class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script>
+        (function initScrollReveal() {
+            const items = document.querySelectorAll('.reveal');
+            if (!items.length) return;
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion) {
+                items.forEach(el => el.classList.add('revealed'));
+                return;
+            }
+
+            const groupDelays = new Map();
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const el = entry.target;
+                    const parent = el.parentElement;
+                    const siblingIndex = groupDelays.get(parent) || 0;
+                    groupDelays.set(parent, siblingIndex + 1);
+
+                    setTimeout(() => el.classList.add('revealed'), Math.min(siblingIndex, 5) * 90);
+                    observer.unobserve(el);
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+            items.forEach(el => observer.observe(el));
+        })();
+
+        (function initHeaderParticles() {
+            const canvas = document.getElementById('header-particles');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            let particles = [];
+            let width, height;
+            const COLOR = '6, 182, 212';
+            const LINK_DIST = 90;
+
+            function resize() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                width = canvas.width = rect.width;
+                height = canvas.height = rect.height;
+                const count = Math.max(18, Math.round(width / 40));
+                particles = Array.from({ length: count }, () => ({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.35,
+                    vy: (Math.random() - 0.5) * 0.35,
+                    r: Math.random() * 1.6 + 0.8
+                }));
+            }
+
+            function step() {
+                ctx.clearRect(0, 0, width, height);
+
+                for (const p of particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${COLOR}, 0.8)`;
+                    ctx.fill();
+                }
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const a = particles[i], b = particles[j];
+                        const dx = a.x - b.x, dy = a.y - b.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < LINK_DIST) {
+                            ctx.beginPath();
+                            ctx.moveTo(a.x, a.y);
+                            ctx.lineTo(b.x, b.y);
+                            ctx.strokeStyle = `rgba(${COLOR}, ${0.25 * (1 - dist / LINK_DIST)})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                if (!reduceMotion) requestAnimationFrame(step);
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            step();
+        })();
+
+        function submitToWhatsApp(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const serviceSelect = document.getElementById('service');
+            const service = serviceSelect.options[serviceSelect.selectedIndex].text;
+            const location = document.getElementById('location').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            const lines = [
+                'New Quotation Request',
+                `Name: ${name}`,
+                `Phone: ${phone}`,
+                `Service: ${service}`,
+                `Location: ${location}`
+            ];
+            if (message) lines.push(`Details: ${message}`);
+
+            const text = encodeURIComponent(lines.join('\n'));
+            window.open(`https://wa.me/254795629781?text=${text}`, '_blank', 'noopener');
+
+            return false;
+        }
+
+        const navToggle = document.getElementById('nav-toggle');
+        const mainNav = document.getElementById('main-nav');
+
+        navToggle.addEventListener('click', () => {
+            const isOpen = mainNav.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', isOpen);
+            navToggle.innerHTML = isOpen
+                ? '<i class="fa-solid fa-xmark"></i>'
+                : '<i class="fa-solid fa-bars"></i>';
+        });
+
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', false);
+                navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            });
+        });
+    </script>
 
 </body>
 </html>
