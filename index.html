@@ -863,6 +863,10 @@
       }
 
       @media (max-width: 900px) {
+        header {
+          overflow: visible;
+        }
+
         .quote-section,
         .about-grid {
           grid-template-columns: 1fr;
@@ -892,6 +896,7 @@
           border: 1px solid var(--glass-border);
           border-radius: 16px;
           padding: 10px;
+          z-index: 1200;
         }
 
         nav.open {
@@ -924,6 +929,7 @@
 
         .header-actions {
           gap: 6px;
+          margin-left: auto;
         }
       }
 
@@ -1032,6 +1038,7 @@
           top: 12px;
           width: 94%;
           padding: 10px 14px;
+          overflow: visible;
         }
 
         .header-quote i {
@@ -1041,6 +1048,11 @@
         .header-quote {
           padding: 9px 12px;
           min-width: 0;
+        }
+
+        .header-actions {
+          gap: 6px;
+          margin-left: auto;
         }
 
         .hero-content h1 {
@@ -1929,21 +1941,23 @@
       const navToggle = document.getElementById("nav-toggle");
       const mainNav = document.getElementById("main-nav");
 
-      navToggle.addEventListener("click", () => {
-        const isOpen = mainNav.classList.toggle("open");
-        navToggle.setAttribute("aria-expanded", isOpen);
-        navToggle.innerHTML = isOpen
-          ? '<i class="fa-solid fa-xmark"></i>'
-          : '<i class="fa-solid fa-bars"></i>';
-      });
-
-      mainNav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          mainNav.classList.remove("open");
-          navToggle.setAttribute("aria-expanded", false);
-          navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      if (navToggle && mainNav) {
+        navToggle.addEventListener("click", () => {
+          const isOpen = mainNav.classList.toggle("open");
+          navToggle.setAttribute("aria-expanded", String(isOpen));
+          navToggle.innerHTML = isOpen
+            ? '<i class="fa-solid fa-xmark"></i>'
+            : '<i class="fa-solid fa-bars"></i>';
         });
-      });
+
+        mainNav.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            mainNav.classList.remove("open");
+            navToggle.setAttribute("aria-expanded", "false");
+            navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+          });
+        });
+      }
 
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
@@ -1957,15 +1971,36 @@
       const installPill = document.getElementById("install-pill");
       const installAppBtn = document.getElementById("install-app-btn");
 
+      function showInstallHelpMessage() {
+        if (!installAppBtn) return;
+        const originalText = installAppBtn.innerHTML;
+        installAppBtn.innerHTML =
+          '<i class="fa-solid fa-circle-info"></i> Install available on mobile';
+        installAppBtn.disabled = true;
+
+        setTimeout(() => {
+          installAppBtn.innerHTML = originalText;
+          installAppBtn.disabled = false;
+        }, 3500);
+      }
+
       window.addEventListener("beforeinstallprompt", (event) => {
         event.preventDefault();
         deferredPrompt = event;
         if (installPill) installPill.style.display = "block";
       });
 
+      window.addEventListener("appinstalled", () => {
+        if (installPill) installPill.style.display = "none";
+      });
+
       if (installAppBtn) {
         installAppBtn.addEventListener("click", async () => {
-          if (!deferredPrompt) return;
+          if (!deferredPrompt) {
+            showInstallHelpMessage();
+            return;
+          }
+
           deferredPrompt.prompt();
           await deferredPrompt.userChoice;
           deferredPrompt = null;
