@@ -367,27 +367,122 @@
         isolation: isolate;
       }
 
-      .hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: url("https://images.unsplash.com/photo-1687669978475-11760bdda194?auto=format&fit=crop&w=1920&q=80");
-        background-size: cover;
-        background-position: center;
-        z-index: -2;
-      }
-
       .hero::after {
         content: "";
         position: absolute;
         inset: 0;
         background: linear-gradient(
           135deg,
-          rgba(11, 19, 43, 0.88) 0%,
-          rgba(15, 23, 42, 0.75) 45%,
-          rgba(3, 105, 161, 0.55) 100%
+          rgba(11, 19, 43, 0.65) 0%,
+          rgba(15, 23, 42, 0.48) 45%,
+          rgba(3, 105, 161, 0.32) 100%
         );
         z-index: -1;
+      }
+
+      /* --- HERO IMAGE CAROUSEL --- */
+      .hero-slides {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+      }
+
+      .hero-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: scale(1.06);
+        transition:
+          opacity 1.4s ease,
+          transform 6s ease;
+      }
+
+      .hero-slide.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .hero-dots {
+        position: absolute;
+        bottom: 26px;
+        right: 5%;
+        display: flex;
+        gap: 10px;
+        z-index: 2;
+      }
+
+      .hero-dots .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        padding: 0;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+      }
+
+      .hero-dots .dot.active {
+        background: var(--cyan-accent);
+        transform: scale(1.2);
+      }
+
+      .hero-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(10px);
+        color: var(--text-main);
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+      }
+
+      .hero-arrow:hover {
+        background: rgba(6, 182, 212, 0.4);
+        transform: translateY(-50%) scale(1.08);
+      }
+
+      .hero-arrow.prev {
+        left: 4%;
+      }
+
+      .hero-arrow.next {
+        right: 4%;
+      }
+
+      #hero-heading,
+      #hero-sub {
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+
+      .caption-fade {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero-slide {
+          transition: opacity 1.4s ease;
+          transform: none;
+        }
       }
 
       .hero-inner {
@@ -729,6 +824,20 @@
       }
 
       /* --- RESPONSIVE MEDIA QUERIES --- */
+      @media (max-width: 1100px) {
+        .hero-content h1 {
+          font-size: 2.9rem;
+        }
+
+        .hero-content p {
+          font-size: 1rem;
+        }
+
+        .hero-stats {
+          max-width: 100%;
+        }
+      }
+
       @media (max-width: 900px) {
         .quote-section,
         .about-grid {
@@ -737,6 +846,7 @@
 
         .hero-content {
           padding: 32px;
+          max-width: 100%;
         }
 
         .hero-content h1 {
@@ -793,32 +903,70 @@
         }
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 760px) {
         header {
-          top: 12px;
           width: 94%;
           padding: 10px 16px;
         }
 
-        .header-quote i {
-          margin: 0;
-        }
-        .header-quote {
-          padding: 9px 12px;
-          min-width: 0;
+        .logo {
+          gap: 8px;
         }
 
-        section {
-          padding: 70px 6% 60px;
+        .logo span {
+          font-size: 0.95rem;
         }
 
         .hero {
           padding-top: 130px;
           padding-bottom: 60px;
         }
+
         .hero-inner {
           padding: 0 6%;
         }
+
+        .hero-btns {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .hero-btns .btn {
+          justify-content: center;
+          width: 100%;
+        }
+
+        .hero-stats {
+          margin-top: 30px;
+          gap: 12px;
+        }
+
+        .stat-item {
+          min-width: 100px;
+          padding: 14px 10px;
+          flex: 1 1 32%;
+        }
+
+        .hero-arrow {
+          display: none;
+        }
+
+        .hero-dots {
+          bottom: 16px;
+          right: 50%;
+          transform: translateX(50%);
+        }
+
+        .scroll-cue {
+          display: none;
+        }
+      }
+
+      @media (max-width: 640px) {
+        section {
+          padding: 70px 6% 60px;
+        }
+
         .hero-content {
           padding: 24px;
           border-radius: 16px;
@@ -827,32 +975,13 @@
         .hero-content h1 {
           font-size: 2rem;
         }
+
         .hero-content p {
           font-size: 1rem;
         }
 
-        .hero-btns {
-          flex-direction: column;
-          align-items: stretch;
-        }
-        .hero-btns .btn {
-          justify-content: center;
-        }
-
-        .hero-stats {
-          margin-top: 30px;
-          gap: 12px;
-        }
-        .stat-item {
-          min-width: 100px;
-          padding: 14px 10px;
-        }
         .stat-item .stat-number {
           font-size: 1.5rem;
-        }
-
-        .scroll-cue {
-          display: none;
         }
 
         .section-header h2 {
@@ -874,12 +1003,28 @@
         }
       }
 
-      @media (max-width: 400px) {
+      @media (max-width: 430px) {
+        header {
+          top: 12px;
+          width: 94%;
+          padding: 10px 14px;
+        }
+
+        .header-quote i {
+          margin: 0;
+        }
+
+        .header-quote {
+          padding: 9px 12px;
+          min-width: 0;
+        }
+
         .hero-content h1 {
           font-size: 1.7rem;
         }
+
         .logo span {
-          font-size: 1rem;
+          font-size: 0.9rem;
         }
       }
     </style>
@@ -924,12 +1069,50 @@
 
     <!-- HERO SECTION -->
     <section class="hero">
+      <div class="hero-slides">
+        <div
+          class="hero-slide active"
+          style="
+            background-image: url(&quot;https://images.unsplash.com/photo-1687669978475-11760bdda194?auto=format&fit=crop&w=1920&q=80&quot;);
+          "
+        ></div>
+        <div
+          class="hero-slide"
+          style="
+            background-image: url(&quot;https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80&quot;);
+          "
+        ></div>
+        <div
+          class="hero-slide"
+          style="
+            background-image: url(&quot;https://images.unsplash.com/photo-1692369584496-3216a88f94c1?auto=format&fit=crop&w=1920&q=80&quot;);
+          "
+        ></div>
+        <div
+          class="hero-slide"
+          style="
+            background-image: url(&quot;https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=1920&q=80&quot;);
+          "
+        ></div>
+      </div>
+
+      <button
+        class="hero-arrow prev"
+        id="hero-prev"
+        aria-label="Previous slide"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="hero-arrow next" id="hero-next" aria-label="Next slide">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
       <div class="hero-inner">
         <div class="hero-content glass-panel reveal">
-          <h1>
+          <h1 id="hero-heading">
             Limitless Flow <span>Reliable Water Solutions</span> Across Kenya
           </h1>
-          <p>
+          <p id="hero-sub">
             From deep borehole drilling and earth dams to modern drip
             irrigation, site drainage, and complete plumbing installations—we
             engineer water security for homes, farms, and institutions[cite: 1].
@@ -960,6 +1143,13 @@
         </div>
       </div>
 
+      <div class="hero-dots" id="hero-dots">
+        <button class="dot active" data-index="0" aria-label="Slide 1"></button>
+        <button class="dot" data-index="1" aria-label="Slide 2"></button>
+        <button class="dot" data-index="2" aria-label="Slide 3"></button>
+        <button class="dot" data-index="3" aria-label="Slide 4"></button>
+      </div>
+
       <a href="#about" class="scroll-cue">
         Scroll
         <i class="fa-solid fa-chevron-down"></i>
@@ -967,7 +1157,7 @@
     </section>
 
     <!-- ABOUT US -->
-    <section id="about">
+    <section id="about" class="reveal">
       <div class="section-header reveal">
         <h2>About Flowgard</h2>
         <p>Your single-source water & civil engineering contractor[cite: 1].</p>
@@ -1036,7 +1226,7 @@
     </section>
 
     <!-- SERVICES SECTION -->
-    <section id="services">
+    <section id="services" class="reveal">
       <div class="section-header reveal">
         <h2>Core Services</h2>
         <p>End-to-end water management and engineering solutions[cite: 1].</p>
@@ -1180,7 +1370,7 @@
     </section>
 
     <!-- PROCESS SECTION -->
-    <section id="process">
+    <section id="process" class="reveal">
       <div class="section-header reveal">
         <h2>How We Work</h2>
         <p>
@@ -1255,7 +1445,7 @@
     </section>
 
     <!-- PRODUCT LINE TEASER -->
-    <section id="products">
+    <section id="products" class="reveal">
       <div class="section-header reveal">
         <h2>Products & Dispensers</h2>
         <p>
@@ -1308,7 +1498,7 @@
     </section>
 
     <!-- GET QUOTATION & CONTACT SECTION -->
-    <section id="quote">
+    <section id="quote" class="reveal">
       <div class="section-header reveal">
         <h2>Get A Quotation</h2>
         <p>
@@ -1507,6 +1697,97 @@
         );
 
         items.forEach((el) => observer.observe(el));
+      })();
+
+      (function initHeroCarousel() {
+        const slides = document.querySelectorAll(".hero-slide");
+        const dots = document.querySelectorAll("#hero-dots .dot");
+        const heading = document.getElementById("hero-heading");
+        const sub = document.getElementById("hero-sub");
+        const prevBtn = document.getElementById("hero-prev");
+        const nextBtn = document.getElementById("hero-next");
+        if (!slides.length) return;
+
+        const captions = [
+          {
+            heading:
+              "Limitless Flow <span>Reliable Water Solutions</span> Across Kenya",
+            sub: "From deep borehole drilling and earth dams to modern drip irrigation, site drainage, and complete plumbing installations—we engineer water security for homes, farms, and institutions.",
+          },
+          {
+            heading: "Earth Dams & <span>Water Pans</span> Built To Last",
+            sub: "Large-scale excavation and construction to capture and store surface runoff for farms, ranches, and institutions across every season.",
+          },
+          {
+            heading: "Smart <span>Irrigation Systems</span> For Every Farm",
+            sub: "Tailored drip lines, sprinklers, and automated layouts engineered to maximize yield while conserving every drop.",
+          },
+          {
+            heading: "Complete <span>Plumbing Solutions</span> You Can Trust",
+            sub: "Domestic and commercial pipework, maintenance, and sewer connections handled by licensed, experienced technicians.",
+          },
+        ];
+
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        let index = 0;
+        let timer = null;
+
+        function renderCaption(i) {
+          heading.classList.add("caption-fade");
+          sub.classList.add("caption-fade");
+          setTimeout(() => {
+            heading.innerHTML = captions[i].heading;
+            sub.textContent = captions[i].sub;
+            heading.classList.remove("caption-fade");
+            sub.classList.remove("caption-fade");
+          }, 250);
+        }
+
+        function goTo(i) {
+          index = (i + slides.length) % slides.length;
+          slides.forEach((slide, slideIndex) => {
+            slide.classList.toggle("active", slideIndex === index);
+          });
+          dots.forEach((dot, dotIndex) => {
+            dot.classList.toggle("active", dotIndex === index);
+          });
+          renderCaption(index);
+        }
+
+        function startAutoplay() {
+          if (reduceMotion) return;
+          stopAutoplay();
+          timer = setInterval(() => goTo(index + 1), 6000);
+        }
+
+        function stopAutoplay() {
+          if (timer) clearInterval(timer);
+        }
+
+        dots.forEach((dot) => {
+          dot.addEventListener("click", () => {
+            goTo(Number(dot.dataset.index));
+            startAutoplay();
+          });
+        });
+
+        if (prevBtn) {
+          prevBtn.addEventListener("click", () => {
+            goTo(index - 1);
+            startAutoplay();
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener("click", () => {
+            goTo(index + 1);
+            startAutoplay();
+          });
+        }
+
+        startAutoplay();
       })();
 
       (function initHeaderParticles() {
