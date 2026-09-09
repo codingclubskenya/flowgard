@@ -13,6 +13,9 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="theme-color" content="#0b132b" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
 
     <style>
       /* --- CSS VARIABLES & COOL COLOR BLEND --- */
@@ -321,6 +324,27 @@
       .btn-glass:hover {
         background: rgba(255, 255, 255, 0.2);
         transform: translateY(-2px);
+      }
+
+      .install-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #08b6d4, #14b8a6);
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: 0 10px 24px rgba(6, 182, 212, 0.35);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .install-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px rgba(6, 182, 212, 0.45);
       }
 
       /* --- LAYOUT SECTIONS --- */
@@ -1066,6 +1090,21 @@
         </button>
       </div>
     </header>
+
+    <div
+      style="
+        position: fixed;
+        right: 24px;
+        top: 110px;
+        z-index: 1200;
+        display: none;
+      "
+      id="install-pill"
+    >
+      <button class="install-btn" id="install-app-btn">
+        <i class="fa-solid fa-download"></i> Install App
+      </button>
+    </div>
 
     <!-- HERO SECTION -->
     <section class="hero">
@@ -1905,6 +1944,34 @@
           navToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
         });
       });
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./service-worker.js")
+            .catch(() => {});
+        });
+      }
+
+      let deferredPrompt = null;
+      const installPill = document.getElementById("install-pill");
+      const installAppBtn = document.getElementById("install-app-btn");
+
+      window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredPrompt = event;
+        if (installPill) installPill.style.display = "block";
+      });
+
+      if (installAppBtn) {
+        installAppBtn.addEventListener("click", async () => {
+          if (!deferredPrompt) return;
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+          deferredPrompt = null;
+          if (installPill) installPill.style.display = "none";
+        });
+      }
     </script>
   </body>
 </html>
