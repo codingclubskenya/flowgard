@@ -33,6 +33,8 @@
         --glass-border: rgba(255, 255, 255, 0.12);
         --glass-hover: rgba(255, 255, 255, 0.12);
         --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        --surface-soft: rgba(148, 163, 184, 0.08);
+        --surface-strong: rgba(15, 23, 42, 0.8);
 
         --cyan-accent: #06b6d4;
         --teal-accent: #14b8a6;
@@ -299,6 +301,11 @@
         box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
       }
 
+      .btn-primary:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 8px 28px rgba(6, 182, 212, 0.46);
+      }
+
       .header-quote {
         padding: 10px 18px;
         font-size: 0.8rem;
@@ -307,11 +314,6 @@
 
       .header-quote i {
         font-size: 0.8rem;
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 25px rgba(6, 182, 212, 0.5);
       }
 
       .btn-glass {
@@ -357,6 +359,22 @@
       .section-header {
         text-align: center;
         margin-bottom: 60px;
+      }
+
+      .section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        background: rgba(6, 182, 212, 0.12);
+        border: 1px solid rgba(6, 182, 212, 0.25);
+        color: var(--blue-light);
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
       }
 
       .section-header h2 {
@@ -523,10 +541,11 @@
       }
 
       .hero-content h1 {
-        font-size: 3.5rem;
-        line-height: 1.15;
-        font-weight: 700;
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        line-height: 1.08;
+        font-weight: 800;
         margin-bottom: 20px;
+        letter-spacing: -0.04em;
       }
 
       .hero-content h1 span {
@@ -540,9 +559,10 @@
       }
 
       .hero-content p {
-        color: var(--text-muted);
-        font-size: 1.1rem;
+        color: rgba(226, 232, 240, 0.9);
+        font-size: 1.08rem;
         margin-bottom: 35px;
+        max-width: 560px;
       }
 
       .hero-btns {
@@ -587,6 +607,31 @@
         color: var(--text-muted);
         margin-top: 4px;
         letter-spacing: 0.02em;
+      }
+
+      .trust-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+        max-width: 640px;
+      }
+
+      .trust-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        color: var(--text-main);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .trust-item i {
+        color: var(--cyan-accent);
       }
 
       /* --- SCROLL CUE --- */
@@ -664,6 +709,47 @@
       .value-item h4 {
         color: var(--blue-light);
         margin-bottom: 5px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 22px;
+        margin-top: 30px;
+      }
+
+      .feature-card {
+        padding: 24px 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 23, 42, 0.7),
+          rgba(15, 23, 42, 0.45)
+        );
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 18px;
+      }
+
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        background: rgba(6, 182, 212, 0.12);
+        color: var(--cyan-accent);
+        font-size: 1.25rem;
+        margin-bottom: 16px;
+      }
+
+      .feature-card h4 {
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+      }
+
+      .feature-card p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
       }
 
       /* --- SERVICES SECTION --- */
@@ -760,6 +846,64 @@
         font-size: 2.5rem;
         color: var(--blue-light);
         margin-bottom: 15px;
+      }
+
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 22px;
+      }
+
+      .testimonial-card {
+        padding: 26px 22px;
+        position: relative;
+      }
+
+      .testimonial-card::before {
+        content: "\201C";
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        font-size: 4rem;
+        color: rgba(6, 182, 212, 0.22);
+        line-height: 1;
+        font-weight: 700;
+      }
+
+      .testimonial-card p {
+        color: rgba(226, 232, 240, 0.9);
+        margin-bottom: 18px;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .testimonial-avatar {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--cyan-accent),
+          var(--teal-accent)
+        );
+        font-weight: 700;
+      }
+
+      .testimonial-author strong {
+        display: block;
+        font-size: 0.95rem;
+      }
+
+      .testimonial-author span {
+        color: var(--text-muted);
+        font-size: 0.8rem;
       }
 
       /* --- QUOTATION / CONTACT SECTION --- */
@@ -933,12 +1077,58 @@
         }
       }
 
+      .mobile-cta-bar {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        z-index: 1200;
+        display: none;
+        padding: 8px;
+        background: rgba(11, 19, 43, 0.88);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 18px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 18px 38px rgba(2, 6, 23, 0.48);
+      }
+
+      .mobile-cta-bar a {
+        flex: 1;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .mobile-cta-bar .mobile-primary {
+        background: linear-gradient(
+          135deg,
+          var(--cyan-accent),
+          var(--teal-accent)
+        );
+      }
+
+      .mobile-cta-bar .mobile-secondary {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
       @media (max-width: 760px) {
         #install-pill {
           top: auto;
           right: 18px;
           bottom: 18px;
           z-index: 1150;
+        }
+
+        .mobile-cta-bar {
+          display: flex;
+          gap: 8px;
         }
 
         header {
@@ -1015,6 +1205,15 @@
 
         .hero-content p {
           font-size: 1rem;
+        }
+
+        .trust-strip {
+          gap: 8px;
+        }
+
+        .trust-item {
+          width: 100%;
+          justify-content: center;
         }
 
         .stat-item .stat-number {
@@ -1184,8 +1383,24 @@
             <a href="#quote" class="btn btn-primary"
               ><i class="fa-solid fa-paper-plane"></i> Get a Free Quote</a
             >
-            <a href="tel:0732598300" class="btn btn-glass"
-              ><i class="fa-solid fa-phone"></i> Call 0732 598 300</a
+            <a
+              href="https://wa.me/254732598300?text=Hello%20Flowgard%2C%20I%27d%20like%20to%20talk%20about%20your%20water%20services."
+              class="btn btn-glass"
+              target="_blank"
+              rel="noopener"
+              ><i class="fa-solid fa-phone"></i> Talk to an Expert</a
+            >
+          </div>
+
+          <div class="trust-strip">
+            <span class="trust-item"
+              ><i class="fa-solid fa-check"></i> Registered company</span
+            >
+            <span class="trust-item"
+              ><i class="fa-solid fa-location-dot"></i> Kenya-wide service</span
+            >
+            <span class="trust-item"
+              ><i class="fa-solid fa-clock"></i> Fast response team</span
             >
           </div>
         </div>
@@ -1232,9 +1447,9 @@
           <p>
             Fully registered as
             <strong>Flow Gard Water Solutions Limited</strong> (Reg No.
-            PVF6Y1ROLRZ) . Operating out of Ruaraka, Nairobi, we deliver
+            PVF6Y1ROLRZ). Operating out of Ruaraka, Nairobi, we deliver
             reliable, affordable, and professionally executed water and civil
-            engineering solutions across Kenya .
+            engineering solutions across Kenya.
           </p>
         </div>
         <div class="about-card glass-panel reveal">
@@ -1247,8 +1462,41 @@
         </div>
       </div>
 
+      <div class="feature-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fa-solid fa-user-check"></i></div>
+          <h4>Trusted experts</h4>
+          <p>Technical guidance from consultation through final handover.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fa-solid fa-droplet"></i></div>
+          <h4>Water-first design</h4>
+          <p>
+            Every solution is planned around performance, durability, and
+            efficiency.
+          </p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <i class="fa-solid fa-sack-dollar"></i>
+          </div>
+          <h4>Transparent pricing</h4>
+          <p>Clear proposals and realistic budgets with no hidden surprises.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <i class="fa-solid fa-people-arrows"></i>
+          </div>
+          <h4>Client-focused service</h4>
+          <p>
+            We listen closely and tailor every installation to your site and
+            needs.
+          </p>
+        </div>
+      </div>
+
       <!-- VALUES -->
-      <div class="glass-panel" style="padding: 30px">
+      <div class="glass-panel" style="padding: 30px; margin-top: 30px">
         <h3
           style="
             text-align: center;
@@ -1262,25 +1510,25 @@
           <div class="value-item reveal">
             <h4><i class="fa-solid fa-shield-halved"></i> Integrity</h4>
             <p style="font-size: 0.85rem; color: var(--text-muted)">
-              Honest pricing & transparent project execution .
+              Honest pricing & transparent project execution.
             </p>
           </div>
           <div class="value-item reveal">
             <h4><i class="fa-solid fa-award"></i> Quality</h4>
             <p style="font-size: 0.85rem; color: var(--text-muted)">
-              Durable, standards-compliant structural installations .
+              Durable, standards-compliant structural installations.
             </p>
           </div>
           <div class="value-item reveal">
             <h4><i class="fa-solid fa-clock"></i> Reliability</h4>
             <p style="font-size: 0.85rem; color: var(--text-muted)">
-              Showing up and consistently delivering on schedule .
+              Showing up and consistently delivering on schedule.
             </p>
           </div>
           <div class="value-item reveal">
             <h4><i class="fa-solid fa-headset"></i> Customer Care</h4>
             <p style="font-size: 0.85rem; color: var(--text-muted)">
-              Listening first to deliver fully customized solutions .
+              Listening first to deliver fully customized solutions.
             </p>
           </div>
         </div>
@@ -1385,8 +1633,9 @@
             href="#quote"
             class="btn btn-glass"
             style="width: 100%; justify-content: center"
-            >Requests<Details></Details></a
-          >
+            >Requests
+            <details></details
+          ></a>
         </div>
 
         <!-- Service 6 -->
@@ -1485,10 +1734,13 @@
     <!-- PRODUCT LINE TEASER -->
     <section id="products" class="reveal">
       <div class="section-header reveal">
+        <span class="section-badge"
+          ><i class="fa-solid fa-star"></i> Trusted supply</span
+        >
         <h2>Products & Dispensers</h2>
         <p>
           Clean water delivery and dispenser equipment for commercial and home
-          settings .
+          settings.
         </p>
       </div>
 
@@ -1506,7 +1758,7 @@
             "
           >
             Pure, mineral-balanced bottled water available in multiple
-            capacities for office or home delivery .
+            capacities for office or home delivery.
           </p>
           <a href="#quote" class="btn btn-glass" style="font-size: 0.85rem"
             >Inquire Pricing</a
@@ -1526,7 +1778,7 @@
             "
           >
             Modern hot & cold water dispensers for purchase or lease. Complete
-            with installation .
+            with installation.
           </p>
           <a href="#quote" class="btn btn-glass" style="font-size: 0.85rem"
             >Inquire Pricing</a
@@ -1535,13 +1787,69 @@
       </div>
     </section>
 
+    <section class="reveal">
+      <div class="section-header reveal">
+        <span class="section-badge"
+          ><i class="fa-solid fa-comments"></i> Client feedback</span
+        >
+        <h2>Why Customers Choose Us</h2>
+      </div>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card glass-panel reveal">
+          <p>
+            Flowgard handled our borehole project with real professionalism. The
+            team explained every step clearly and delivered on time.
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">N</div>
+            <div>
+              <strong>Njeri M.</strong>
+              <span>Farm owner, Kiambu</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass-panel reveal">
+          <p>
+            We needed a dependable irrigation system for our greenhouse. The
+            design was efficient, and the installation quality was excellent.
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">K</div>
+            <div>
+              <strong>Kenneth O.</strong>
+              <span>Commercial grower</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass-panel reveal">
+          <p>
+            From site assessment to final plumbing work, they were responsive
+            and easy to work with. We felt supported throughout the process.
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">A</div>
+            <div>
+              <strong>Asha T.</strong>
+              <span>Property manager</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- GET QUOTATION & CONTACT SECTION -->
     <section id="quote" class="reveal">
       <div class="section-header reveal">
+        <span class="section-badge"
+          ><i class="fa-solid fa-paper-plane"></i> Request a quote</span
+        >
         <h2>Get A Quotation</h2>
         <p>
           Contact our technical team today to discuss your project scope and
-          receive a transparent quote .
+          receive a transparent quote.
         </p>
       </div>
 
@@ -1681,13 +1989,26 @@
     <!-- FOOTER -->
     <footer>
       <p>
-        &copy; 2026 Flow Gard Water Solutions Limited (PVF6Y1ROLRZ) . All Rights
+        &copy; 2026 Flow Gard Water Solutions Limited (PVF6Y1ROLRZ). All Rights
         Reserved.
       </p>
       <p style="margin-top: 5px; opacity: 0.6">
         Trio Complex, Ruaraka, Nairobi | P.O. Box 10208, Nairobi
       </p>
     </footer>
+
+    <div class="mobile-cta-bar">
+      <a href="#quote" class="mobile-primary"
+        ><i class="fa-solid fa-paper-plane"></i> Quote</a
+      >
+      <a
+        href="https://wa.me/254732598300?text=Hello%20Flowgard%2C%20I%27d%20like%20to%20talk%20about%20your%20water%20services."
+        class="mobile-secondary"
+        target="_blank"
+        rel="noopener"
+        ><i class="fa-solid fa-phone"></i> Call</a
+      >
+    </div>
 
     <!-- WHATSAPP FLOATING BUTTON -->
     <a
